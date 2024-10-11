@@ -4,3 +4,4 @@ omit =
     tests/conftest.py
     tests/__init__.py
     /usr/lib/python3/dist-packages/six.py
+    app/commands/__init__.py
