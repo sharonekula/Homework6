@@ -1,29 +1,26 @@
-
 """
-This module for the REPL functionality of the App class. 
+Test module for the REPL functionality of the App class.
 """
+import pytest
 from app import App
 
 def test_app_start_exit_command(capfd, monkeypatch):
-
-    """Testing that the REPL (Read, Evaluate, Print, Loop) will exit on exit command correctly"""
-
+    """Test that the REPL exits correctly on 'exit' command."""
+    # Simulate user entering 'exit'
     monkeypatch.setattr('builtins.input', lambda _: 'exit')
-    App.start()
-    out, err = capfd.readouterr()
-
-    assert "Welcome to my App. Type 'exit' to exit." in out
-    assert "Exiting..." in out
+    app = App()
+    with pytest.raises(SystemExit) as e:
+        app.start()
+    assert e.type == SystemExit
 
 def test_app_start_unknown_command(capfd, monkeypatch):
-
-    """Testing the unknown command input correctly"""
-
+    """Test how the REPL handles an unknown command before exiting."""
     inputs = iter(['unknown_command', 'exit'])
     monkeypatch.setattr('builtins.input', lambda _: next(inputs))
-    App.start()
-    out, err = capfd.readouterr()
 
-    assert "Welcome to my App. Type 'exit' to exit." in out
-    assert "Unknown command. Type 'exit' to exit." in out
-    assert "Exiting..." in out
+    app = App()
+    with pytest.raises(SystemExit) as excinfo:
+        app.start()
+    captured = capfd.readouterr()
+    assert "No such command: unknown_command" in captured.out
+    
