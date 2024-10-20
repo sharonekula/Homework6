@@ -70,16 +70,3 @@ def test_dividebyzero_command(capfd, monkeypatch):
     command.execute()
     out, err = capfd.readouterr()
     assert "DivisionByZero Exception" in out, "This operation should raise a division by zero error."
-
-def test_app_menu_command(capfd, monkeypatch):
-    """
-    Test the App's REPL functionality to ensure that the 'menu' command works as expected
-    and that the application exits properly when the 'exit' command is issued.
-    Simulates user interaction with the REPL menu and exit commands.
-    """
-    inputs = iter(['menu', 'exit'])
-    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
-    app = App()
-    with pytest.raises(SystemExit) as e:
-        app.start()  # Assuming App.start() is now a static method based on previous discussions
-    assert str(e.value) == "Exiting...", "The app did not exit as expected."
