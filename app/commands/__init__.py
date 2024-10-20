@@ -13,7 +13,6 @@ class CommandHandler:
         self.commands[command_name] = command
 
     def execute_command(self, command_name: str):
-        """Calling the execute method when command given is matched."""
         try:
             self.commands[command_name].execute()
         except KeyError:
