@@ -3,8 +3,6 @@ Test suite for verifying the arithmetic commands and REPL behavior in the App cl
 This module contains unit tests for basic arithmetic operations such as addition,
 subtraction, multiplication, and division, along with tests for REPL menu handling.
 """
-import pytest
-from app import App
 from app.plugins.add import AddCommand
 from app.plugins.subtract import SubtractCommand
 from app.plugins.multiply import MultiplyCommand
