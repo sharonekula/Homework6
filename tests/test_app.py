@@ -3,6 +3,7 @@ Test module for the REPL functionality of the App class.
 """
 import pytest
 from app import App
+from app.plugins.menu import MenuCommand
 
 def test_app_get_environment_variable():
     """Test the environment variable"""
@@ -31,4 +32,12 @@ def test_app_start_unknown_command(capfd, monkeypatch):
         app.start()
     captured = capfd.readouterr()
     assert "No such command: unknown_command" in captured.out
+
+def test_menu_command_execute(capfd):
+    """Tests the command Menu command"""
+    command = MenuCommand()
+    command.execute()
+    captured = capfd.readouterr()
+    expected_output = 'Homework6 - Calculator\n'
+    assert captured.out == expected_output
     
